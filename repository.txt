@@ -1,0 +1,12 @@
+# Ajouter le dépôt forké comme télécommande remote
+git remote add fork https://github.com/ton-nom-utilisateur/nom-du-depot-forke.git
+
+# Pousser les changements locaux vers ton fork
+git add .
+git commit -m "Description des changements"
+git push fork master
+
+# Récupérer et fusionner les mises à jour du dépôt original
+git fetch upstream
+git merge upstream/master
+git push fork master

@@ -11,10 +11,10 @@ app.use(express.json());
 
 // Route de test
 app.get("/", (req, res) => {
-  res.json({ message: "API en cours d'exécution..." });
+  res.json({ message: "API en cours de connexion..." });
 });
 
 // Lancer le serveur
-app.listen(PORT, () => {
+app.listen(PORT,() => {
   console.log(`✅ Serveur démarré sur http://localhost:${PORT}`);
 });
