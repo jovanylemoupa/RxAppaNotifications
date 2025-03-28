@@ -1,74 +1,106 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { View, Text, TextInput, StyleSheet } from 'react-native';
+import Button from '@/app/core/button'; // Assurez-vous de l'importer correctement
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const API_URL = "http://192.168.X.X:5000"; // Remplace par ton IP locale
 
-export default function HomeScreen() {
+const Stack = createStackNavigator();
+
+export default function Index() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Bonjour la Teams je fais ce teste pour montrer que le code fonctionne parfaiement </ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Home" component={HomeScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function HomeScreen() {
+  const [backendMessage, setBackendMessage] = useState("Connexion en cours...");
+
+  useEffect(() => {
+    fetch(API_URL)
+      .then((response) => response.json())
+      .then((data) => setBackendMessage(data.message))
+      .catch(() => setBackendMessage("❌ Erreur de connexion au backend"));
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Text style={styles.logo}>Rx-APA</Text>
+      </View>
+      <View style={styles.authContainer}>
+        <Text style={styles.authTitle}>AUTHENTIFICATION</Text>
+        <Text style={styles.authSubtitle}>Veuillez saisir votre code personnel</Text>
+        <TextInput style={styles.input} placeholder="Entrez votre code" placeholderTextColor="#999" />
+        <Button variant="secondary">
+          <Text style={styles.buttonText}>CONNEXION</Text>
+        </Button>
+        <Text style={styles.link}>Je n'ai pas le code personnel</Text>
+      </View>
+      {/* ✅ Message du backend affiché ici */}
+      <Text style={styles.backendMessage}>{backendMessage}</Text>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  container: {
+    flex: 1,
+    backgroundColor: '#b0c4de',
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'center',
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
+  logoContainer: {
     position: 'absolute',
+    top: 80,
+  },
+  logo: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#0a2a66',
+  },
+  authContainer: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    alignItems: 'center',
+    elevation: 5,
+  },
+  authTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  authSubtitle: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  input: {
+    width: '100%',
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 15,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  link: {
+    color: '#0a2a66',
+    marginTop: 10,
+    textDecorationLine: 'underline',
+  },
+  backendMessage: {
+    marginTop: 20,
+    fontSize: 14,
+    color: '#0a2a66',
   },
 });

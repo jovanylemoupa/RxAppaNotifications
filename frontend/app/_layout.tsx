@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { registerForPushNotificationsAsync } from "./core/notifications";
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -18,6 +19,7 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
+    registerForPushNotificationsAsync();
     if (loaded) {
       SplashScreen.hideAsync();
     }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "42367831628",
+    "project_id": "rxappanotifications",
+    "storage_bucket": "rxappanotifications.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:42367831628:android:d9044806af2597c327aee9",
+        "android_client_info": {
+          "package_name": "com.rxapa.RxAppaNotifications"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq3ejG_Grbx59PoTKt4EQAMhraFfqQv40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
