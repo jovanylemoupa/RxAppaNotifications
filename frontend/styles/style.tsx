@@ -1,20 +1,26 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
-export type Props={
-    children?: React.ReactNode;
-}
-export default function Backgrounds({
-children
-}:Props){
-    return (
-        <View style={styles.container}>
-            {children}
-        </View>
-    );
-}
+import { StyleSheet } from "react-native";
+export const style = StyleSheet.create({
+    titleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    stepContainer: {
+        gap: 8,
+        marginBottom: 8,
+        alignItems: 'center',
+    },
+    reactLogo: {
+        height: 178,
+        width: 290,
+        bottom: 0,
+        left: 0,
+        position: 'absolute',
+    },
+});
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#b0c4de', // Bleu clair
@@ -24,6 +30,17 @@ const styles = StyleSheet.create({
     logoContainer: {
         position: 'absolute',
         top: 80,
+    },
+    text: {
+        marginHorizontal: 8,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    message: {
+        marginTop: 10,
+        textAlign: 'center',
+        fontSize: 14,
+        color: "#333",
     },
     logo: {
         fontSize: 30,
@@ -57,14 +74,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 10,
         marginBottom: 15,
-    },
-    button: {
-        backgroundColor: '#f79c00',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-        width: '100%',
+        flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
     },
     buttonText: {
         color: 'white',
@@ -74,6 +86,10 @@ const styles = StyleSheet.create({
         color: '#0a2a66',
         marginTop: 10,
         textDecorationLine: 'underline',
+    }, 
+    content: {
+        flexDirection: 'row',
+        alignItems: "flex-start",
     },
 });
 

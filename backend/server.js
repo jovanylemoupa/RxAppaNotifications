@@ -11,7 +11,7 @@ app.use(express.json());
 
 // Route de test
 app.get("/", (req, res) => {
-  res.json({ message: "API en cours de connexion..." });
+  res.json({ message: "Djiki t'es un genie......." });
 });
 
 // Lancer le serveur
