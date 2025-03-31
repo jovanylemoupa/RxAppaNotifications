@@ -2,6 +2,7 @@ import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import Constants from "expo-constants";
 import axios from "axios";
+import { View, Text } from "react-native";
 
 export async function registerForPushNotificationsAsync(): Promise<string | undefined> {
   if (!Device.isDevice) {
@@ -22,23 +23,31 @@ export async function registerForPushNotificationsAsync(): Promise<string | unde
     return;
   }
 
-  // Vérifier si expoConfig est défini avant de l'utiliser
   const projectId = Constants.expoConfig?.extra?.eas?.projectId;
-
   if (!projectId) {
     console.warn("🚨 Le projectId d'Expo est introuvable.");
     return;
   }
 
-  // Obtenir le token Expo
-  const { data: token } = await Notifications.getExpoPushTokenAsync({
-    projectId: projectId,
-  });
+  try {
+    const { data: token } = await Notifications.getExpoPushTokenAsync({
+      projectId: projectId,
+    });
 
-  console.log("🔥 Token Expo :", token);
+    console.log("🔥 Token Expo :", token);
+    await axios.post("http://192.168.X.X:5000/save-token", { token });
 
-  // Envoyer le token au backend
-  await axios.post("http://192.168.X.X:3000/save-token", { token });
+    return token;
+  } catch (error) {
+    console.error("Erreur lors de la récupération du token Expo :", error);
+  }
+}
 
-  return token;
+// ✅ Ajout d'un composant React pour éviter l'erreur Expo Router
+export default function NotificationsScreen() {
+  return (
+    <View>
+      <Text>Page de gestion des notifications</Text>
+    </View>
+  );
 }

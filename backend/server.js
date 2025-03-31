@@ -19,9 +19,13 @@ app.use(express.json());
 
 let userTokens = []; // Stocke les tokens des appareils
 
-// ✅ Route de test
+// ✅ Message par défaut envoyé depuis le backend
+const defaultMessage = "🔄 Chargement des données depuis le serveur node...";
+
+// ✅ Route de test pour récupérer le message
 app.get("/", (req, res) => {
-  res.json({ message: "API en cours de connexion..." });
+  console.log("📡 Requête GET reçue sur /");
+  res.json({ message: defaultMessage });
 });
 
 // ✅ Sauvegarder un token Firebase Cloud Messaging (FCM)
