@@ -6,7 +6,7 @@ import {
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import app from "../../config/firebaseConfig";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "http://192.168.230.82:5000";
 const auth = getAuth(app);
 
 const HomeScreen = ({navigation}) => {

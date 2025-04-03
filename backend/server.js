@@ -3,7 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 const admin = require("firebase-admin");
 
-// 🔥 Initialisation de Firebase
+// 🔥 Initialisation de Firebase avec les credentials
 const serviceAccount = require("./src/config/serviceAccountKey.json");
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -28,6 +28,11 @@ app.get("/", (req, res) => {
   res.json({ message: defaultMessage });
 });
 
+// ✅ Route pour récupérer tous les tokens enregistrés
+app.get("/tokens", (req, res) => {
+  res.json({ tokens: userTokens });
+});
+
 // ✅ Sauvegarder un token Firebase Cloud Messaging (FCM)
 app.post("/save-token", (req, res) => {
   const { token } = req.body;
@@ -43,7 +48,7 @@ app.post("/send-notification", async (req, res) => {
   const { title, body } = req.body;
 
   if (!title || !body || userTokens.length === 0) {
-    return res.status(400).json({ error: "Données manquantes ou aucun token" });
+    return res.status(400).json({ error: "Données manquantes ou aucun token enregistré." });
   }
 
   const messages = userTokens.map((token) => ({
@@ -52,8 +57,8 @@ app.post("/send-notification", async (req, res) => {
   }));
 
   try {
-    await admin.messaging().sendEach(messages);
-    res.json({ success: "Notifications envoyées !" });
+    const response = await admin.messaging().sendEach(messages);
+    res.json({ success: "Notifications envoyées !", response });
   } catch (error) {
     console.error("❌ Erreur lors de l'envoi :", error);
     res.status(500).json({ error: "Erreur lors de l'envoi de la notification" });
