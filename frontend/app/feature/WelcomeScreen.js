@@ -36,6 +36,7 @@ const WelcomeScreen = ({ route, navigation }) => {
                 <Buton icon={Notif} iconPosition="left" onPress={() => router.push("/feature/screens/Notification")}>
                     Notification
                 </Buton>
+               
     </View>
   );
 };
